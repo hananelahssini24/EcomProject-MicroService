@@ -1,0 +1,153 @@
+<div class="d-flex justify-content-between border-top border-bottom border-gray block m-0 bg-transparent">
+    <div class="d-flex flex-row">
+      <div class="border-end border-gray border-1 d-flex align-items-center px-3 pe-3" style="cursor: pointer;"
+        >
+        <span>
+          <i class="bi bi-arrow-left"></i> 
+        </span>
+      </div>
+      <div class="p-0 border-0">
+        <span class="d-flex align-items-center p-2 px-3">
+          <i 
+          class="bi bi-plus btn bg-primary text-white p-3 d-flex justify-content-center align-items-center" 
+          style="font-size: 1rem; height: 2rem; width: 2rem;  cursor: pointer;" 
+          
+          data-bs-toggle="offcanvas" data-bs-target="#offcanvasAdd" aria-controls="offcanvasAdd"  (click)="billOpen('add')  "></i>
+          <span class="mx-2 fs-3"><strong>bill</strong></span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="loading">Chargement des clients...</div>
+  <div class="container" *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+
+
+
+
+  <!-- <div class="container p-2">
+  <table ngClass="table" *ngIf="!loading && !errorMessage" class="table">
+    <thead>
+      <tr>
+        <th>BillingDate</th>
+        <th>Customer Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let bill of bills" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDetails" aria-controls="offcanvasDetails" (click)="billOpen('detail',bill)" >
+        <td>{{ bill.billingDate }}</td>
+        <td>{{ bill.customer?.name }}</td>
+        <td><button class="btn btn-primary me-1"><i class="bi bi-pencil" 
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasEdit" aria-controls="offcanvasEdit" (click)="billOpen('edit', bill)" style="cursor: pointer;"></i>
+        </button>
+        <button class="btn btn-danger me-1" (click)="deleteBill(bill.id)"><i class="bi bi-trash"></i></button></td>
+        <button (click)="addProductItem()" class="btn btn-primary">Add ProductItem</button>
+      </tr>
+    </tbody>
+  </table>
+  </div> -->
+
+
+  <div class="block block-rounded">
+    <table class="table table-sm table-responsive table-borderless table-hover table-striped p-1">
+      <thead>
+        <tr class="border-bottom">
+          <th class="col px-4 border-end">Bill</th>
+          <th class="col px-4 border-end">Billing Date</th>
+          <th class="col px-4 border-end">customer Name</th>
+          <th class="col col-1"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of bills" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDetails" aria-controls="offcanvasDetails" (click)="billOpen('detail',item)" >
+          <td class="fs-sm border-end px-3 p-0 pt-1"  class="small">
+          <p class="mx-2 rounded-circle bg-secondary text-white float-start position-relative mx-3 m-0 p1 d-flex align-items-center"
+                style="width: 20px; height: 20px; line-height: 20px;">
+                <span class="m-1" style="width: 18px; height: 18px; font-size: 10px; text-align: center;">
+                  {{item.id}}
+                </span>
+              </p>
+         
+        </td>
+        <td class="small">{{ item.billingDate | date:'dd/MM/yyyy' }}</td>
+          <td class="small">{{item.customer?.name}}</td>
+          
+          <td>
+            <div class="dropdown small">
+              <button class="btn  text-dark btn-sm p-0 m-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-three-dots" style="font-size: 0.85rem;"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dropdownMenuButton" style="min-width: 3rem;height: 2rem;">
+                <li class="d-flex flex-wrap justify-content-start gap-2 px-1 py-1"> <!-- Unified all buttons into one row -->
+                  <button (click)="deleteBill(item.id)" class="btn  p-0 m-0">
+                    <i class="bi bi-trash" style="font-size: 0.8rem;"></i>
+                  </button>
+                  <button class="btn  p-0 m-0" data-bs-toggle="offcanvas" data-bs-target="#offcanvasEdit" aria-controls="offcanvasEdit"  (click)="billOpen('edit',item)  ">
+                    <i class="bi bi-pencil" style="font-size: 0.8rem;"></i>
+                  </button>
+                </li>
+              </ul>
+              
+            </div>
+          </td>
+          
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+   <!-- Edit bill Offcanvas -->
+   <div class="offcanvas offcanvas-end" tabindex="-1" id="editbillOffcanvas" aria-labelledby="editbillOffcanvasLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="editbillOffcanvasLabel">Edit bill</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <form>
+        <div class="mb-3">
+          <label for="editbillName" class="form-label">bill Name</label>
+          <input type="text" class="form-control" id="editbillName" required>
+        </div>
+        <div class="mb-3">
+          <label for="editbillEmail" class="form-label">Email</label>
+          <input type="email" class="form-control" id="editbillEmail" required>
+        </div>
+        <div class="mb-3">
+          <label for="editbillPhone" class="form-label">Phone</label>
+          <input type="text" class="form-control" id="editbillPhone" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+      </form>
+    </div>
+  </div>
+  <div class="offcanvas offcanvas-end bg-body-extra-light w-25" tabindex="-1" id="offcanvasAdd" aria-labelledby="offcanvasAddLabel" aria-modal="true" role="dialog">
+    <app-add-bill *ngIf="billAddOpen" (refresh)="loadBills()"></app-add-bill>
+  </div>
+  <div class="offcanvas offcanvas-end bg-body-extra-light w-50" tabindex="-1" id="offcanvasAdd"
+  aria-labelledby="offcanvasAddLabel" aria-modal="true" role="dialog">
+  <app-add-bill *ngIf=" billEditOpen" ></app-add-bill>
+  </div>
+
+
+
+  <div class="offcanvas offcanvas-end bg-body-extra-light w-50" tabindex="-1" id="offcanvasEdit"
+  aria-labelledby="offcanvasEditLabel" aria-modal="true" role="dialog">
+  <app-edit-bill *ngIf=" billEditOpen" [bill]="selectedBill" (refresh)="loadBills()"></app-edit-bill>
+  </div>
+
+
+  <div class="offcanvas offcanvas-end bg-body-extra-light w-50" tabindex="-1" id="offcanvasDetails"
+    aria-labelledby="offcanvasDetailsLabel" aria-modal="true" role="dialog">
+    <app-product-item *ngIf="productItemOpen " [bill]="selectedBill"></app-product-item>
+  </div>

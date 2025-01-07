@@ -1,0 +1,22 @@
+.sidebar {
+    min-height: 100vh;
+  }
+  .sidebar .nav-link {
+    color: #ccc;
+  }
+  .sidebar .nav-link.active {
+    color: #fff;
+    background-color: #495057;
+    font-weight: bold;
+  }
+  .sidebar .nav-link:hover {
+    color: #fff;
+  }
+  .sidebar img {
+    max-height: 40px;
+    margin-bottom: 1rem;
+  }
+
+  .navbarclass{
+background:#1D5C8B;
+  }

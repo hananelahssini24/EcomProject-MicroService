@@ -20,4 +20,13 @@ export class CustomerService {
   getAllCustomers(): Observable<CustomerListResponse> {
     return this.http.get<CustomerListResponse>(this.apiUrl);
   }
+
+  // Créer un nouveau client
+  createCustomer(customer: Customer): Observable<Customer> {
+    return this.http.post<Customer>(this.apiUrl, customer);
+  }
+
+  deleteCustomer(id: number){
+    return this.http.delete<Customer>(`${this.apiUrl}/${id}`);
+  }
 }

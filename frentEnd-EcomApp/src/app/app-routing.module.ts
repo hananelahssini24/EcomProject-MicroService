@@ -4,12 +4,16 @@ import { AddBillComponent } from './Components/bill/views/bill/add-bill/add-bill
 import { BillComponent } from './Components/bill/views/bill/bill/bill.component';
 import { CustomerComponent } from './Components/bill/views/customer/customer/customer.component';
 import { AddCustomerComponent } from './Components/bill/views/customer/add-customer/add-customer.component';
+import { InventoryComponent } from './Components/bill/views/inventory/inventory/inventory.component';
+import { ProductItemComponent } from './Components/bill/views/productItem/product-item/product-item.component';
 
 const routes: Routes = [
   { path: 'bill', component: BillComponent },
-  { path: 'bill/add', component: AddBillComponent },
+  { path: 'inventory', component: InventoryComponent },
   { path: 'customer', component: CustomerComponent },
-  { path: 'customer/add', component: AddCustomerComponent },
+  { path: 'customer', component: CustomerComponent },
+  { path: 'productItems', component: ProductItemComponent }
+
 ];
 
 @NgModule({

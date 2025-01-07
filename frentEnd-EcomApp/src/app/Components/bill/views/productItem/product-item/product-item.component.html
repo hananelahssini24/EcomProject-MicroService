@@ -1,0 +1,167 @@
+<div class="container my-4">
+  <h5 class="text-center mb-4">Product Items for Bill N° {{ bill.id }}</h5>
+
+  <div class="table-responsive">
+    <table class="table table-sm table-hover table-striped align-middle">
+      <thead class="table-light">
+        <tr>
+          <th scope="col" class="border-end">Product Name</th>
+          <th scope="col" class="border-end text-center">Quantity</th>
+          <th scope="col" class="border-end text-end">Unit Price</th>
+          <th scope="col" class="border-end text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of bill.productItems">
+          <td class="small">{{ item.product?.name }}</td>
+          <td class="small text-center">{{ item.quantity }}</td>
+          <td class="small text-end">{{ item.unitPrice}}</td>
+          <td class="text-center">
+            <button (click)="onDelete(item.id)"
+              class="btn btn-sm btn-danger" 
+              title="Delete Product" 
+              aria-label="Delete Product">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+
+  <div class="text-center mt-4">
+    <button 
+      type="button" 
+      class="btn btn-sm btn-outline-primary px-4" 
+      (click)="openAddProdItem()"
+    >
+      Add Product Items
+    </button>
+  </div>
+</div>
+
+
+
+
+
+
+<ng-container *ngIf="showModalProdItem">
+  <div
+    class="modal fade show"
+    style="display: block; background-color: rgba(0, 0, 0, 0.5);"
+  >
+    <div
+      class="modal-dialog modal-dialog-centered"
+      style="max-width: 500px; margin: auto;"
+    >
+      <div class="modal-content shadow-lg rounded-4 border-0">
+        <!-- Header -->
+        <div
+          class="modal-header   d-flex justify-content-between align-items-center"
+        >
+          <button
+            type="button"
+            id="btn-close-price"
+            class="btn-close "
+            aria-label="Close"
+            (click)="oncloseProdItem()"
+          ></button>
+        </div>
+
+        <!-- Form -->
+        <form
+          [formGroup]="prodItemForm"
+          class="modal-body p-4"
+          id="prodItemForm"
+        >
+          <!-- Product ID -->
+          <div class="mb-3">
+            <label class="form-label" for="productId">
+              Product ID <span class="text-danger">*</span>
+            </label>
+            <select
+              id="productId"
+              class="form-select form-select-sm"
+              formControlName="productId"
+            >
+              <option *ngFor="let item of products" [ngValue]="item">
+                {{ item.name }}
+              </option>
+            </select>
+            <div
+              *ngIf="
+                prodItemForm.get('productId')!.invalid &&
+                prodItemForm.get('productId')!.touched
+              "
+              class="form-text text-danger"
+            >
+              Product ID is required
+            </div>
+          </div>
+
+          <!-- Quantity -->
+          <div class="mb-3">
+            <label class="form-label" for="quantity">
+              Quantity <span class="text-danger">*</span>
+            </label>
+            <input
+              type="number"
+              class="form-control form-control-sm"
+              id="quantity"
+              formControlName="quantity"
+            />
+            <div
+              *ngIf="
+                prodItemForm.get('quantity')!.invalid &&
+                prodItemForm.get('quantity')!.touched
+              "
+              class="form-text text-danger"
+            >
+              Quantity is required
+            </div>
+          </div>
+
+          <!-- Unit Price -->
+          <div class="mb-3">
+            <label class="form-label" for="unitPrice">
+              Unit Price <span class="text-danger">*</span>
+            </label>
+            <input
+              type="number"
+              class="form-control form-control-sm"
+              id="unitPrice"
+              formControlName="unitPrice"
+            />
+            <div
+              *ngIf="
+                prodItemForm.get('unitPrice')!.invalid &&
+                prodItemForm.get('unitPrice')!.touched
+              "
+              class="form-text text-danger"
+            >
+              Unit Price is required
+            </div>
+          </div>
+        </form>
+
+        <!-- Footer -->
+        <div class="modal-footer border-top-0 bg-light p-3 d-flex justify-content-end">
+          <button
+            (click)="oncloseProdItem()"
+            class="btn btn-outline-secondary me-2"
+          >
+            <i class="bi bi-x"></i> Cancel
+          </button>
+          <button
+            class="btn btn-primary"
+            [disabled]="prodItemForm.invalid"
+            (click)="onSubmitProdItem()"
+          >
+            <i class="bi bi-download"></i> Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

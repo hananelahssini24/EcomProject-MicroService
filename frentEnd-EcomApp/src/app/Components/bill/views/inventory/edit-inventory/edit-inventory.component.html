@@ -1,1 +1,46 @@
-<p>edit-inventory works!</p>
+
+<div class="offcanvas-header bg-primary d-flex align-items-center p-2">
+
+    <button type="submit" class="btn btn-primary me-2" form="formProduct" [disabled]="formProduct.invalid" data-bs-dismiss="offcanvas" aria-label="Close"> 
+     Save
+    </button>
+  
+  
+      <span  class="mx-1 offcanvas-title text-muted"  id="offcanvasRightLabel">Edit Product </span>
+  
+      <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" (click)="onclose()"></button>
+  
+  </div>
+    <div class="offcanvas-body">
+      <div class="block-content block-content-full">
+        <form [formGroup]="formProduct" (ngSubmit)="onSubmit()"  id="formProduct" >
+          <div class="row">
+            <div>
+              <div class="mb-4">
+                <label class="form-label" for="name">Name</label>
+                <input type="text" class="form-control form-control-sm" id="name" formControlName="name">
+                <div *ngIf="formProduct.get('name')!.invalid && formProduct.get('name')!.touched" class="text-danger">
+                  Name is required.
+                </div>
+              </div>
+              <div class="mb-4">
+                <label class="form-label" for="price">price</label>
+                <input type="text" class="form-control" name="price" id="price" formControlName="price" placeholder="">
+                <div *ngIf="formProduct.get('price')!.invalid && formProduct.get('price')!.touched" class="text-danger">
+                    Name is required.
+                  </div>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label" for="quantity">quantity</label>
+                <input type="text" class="form-control" name="quantity" id="quantity" formControlName="quantity" placeholder="">
+                <div *ngIf="formProduct.get('quantity')!.invalid && formProduct.get('quantity')!.touched" class="text-danger">
+                    Name is required.
+                  </div>
+              </div>
+              
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>

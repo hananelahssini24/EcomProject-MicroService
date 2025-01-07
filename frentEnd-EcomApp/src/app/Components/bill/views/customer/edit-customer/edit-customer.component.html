@@ -1,1 +1,38 @@
-<p>edit-customer works!</p>
+
+<div class="offcanvas-header bg-primary d-flex align-items-center p-2">
+
+    <button type="submit" class="btn btn-primary me-2" form="formCustomer" [disabled]="formCustomer.invalid" data-bs-dismiss="offcanvas" aria-label="Close"> 
+     Save
+    </button>
+  
+  
+      <span  class="mx-1 offcanvas-title text-muted"  id="offcanvasRightLabel">Edit Customer </span>
+  
+      <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" (click)="onclose()"></button>
+  
+  </div>
+    <div class="offcanvas-body">
+      <div class="block-content block-content-full">
+        <form [formGroup]="formCustomer" (ngSubmit)="onSubmit()"  id="formCustomer" >
+          <div class="row">
+            <div>
+              <div class="mb-4">
+                <label class="form-label" for="name">Name</label>
+                <input type="text" class="form-control form-control-sm" id="name" formControlName="name">
+                <div *ngIf="formCustomer.get('name')!.invalid && formCustomer.get('name')!.touched" class="text-danger">
+                  Name is required.
+                </div>
+              </div>
+              <div class="mb-4">
+                <label class="form-label" for="email">Email</label>
+                <input type="email" class="form-control" name="email" id="email" formControlName="email" placeholder="">
+                <div *ngIf="formCustomer.get('email')!.invalid && formCustomer.get('email')!.touched" class="text-danger">
+                    Name is required.
+                  </div>
+              </div>
+              
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>

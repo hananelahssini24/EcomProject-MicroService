@@ -1,23 +1,110 @@
+<div class="d-flex justify-content-between border-top border-bottom border-gray block m-0 bg-transparent">
+  <div class="d-flex flex-row">
+    <div class="border-end border-gray border-1 d-flex align-items-center px-3 pe-3" style="cursor: pointer;"
+      >
+      <span>
+        <i class="bi bi-arrow-left"></i> 
+      </span>
+    </div>
+    <div class="p-0 border-0">
+      <span class="d-flex align-items-center p-2 px-3">
+        <i 
+        class="bi bi-plus btn bg-primary text-white p-3 d-flex justify-content-center align-items-center" 
+        style="font-size: 1rem; height: 2rem; width: 2rem;  cursor: pointer;" 
+        (click)="openModel()"
+      ></i>
+        <span class="mx-2 fs-3"><strong>Customer</strong></span>
+      </span>
+    </div>
+  </div>
+</div>
 <div *ngIf="loading">Chargement des clients...</div>
 <div class="container" *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 <div class="container p-2">
-  <button class="btn btn-primary p-2">Add Custmer</button>
 <table ngClass="table" *ngIf="!loading && !errorMessage" class="table">
   <thead>
     <tr>
-      <th>ID</th>
       <th>Nom</th>
       <th>Email</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let customer of customers">
-      <td>{{ customer.id }}</td>
       <td>{{ customer.name }}</td>
       <td>{{ customer.email }}</td>
-      <td><button class="btn btn-primary me-1"><i class="bi bi-pencil"></i></button>
-      <button class="btn btn-danger"><i class="bi bi-trash"></i></button></td>
+      <td><button class="btn btn-primary me-1"><i class="bi bi-pencil" 
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasEdit" aria-controls="offcanvasEdit" (click)="customerOpen('edit', customer)" style="cursor: pointer;"></i>
+      </button>
+      <button class="btn btn-danger" (click)="deleteCustomer(customer.id,customer.name)"><i class="bi bi-trash"></i></button></td>
     </tr>
   </tbody>
 </table>
+</div>
+ <!-- Add Customer Modal -->
+ <ng-container *ngIf="showModalCustomer">
+  <div class="modal fade show" style="display: block; background-color: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addCustomerModalLabel">Add New Customer</h5>
+          <button type="button" class="btn-close" (click)="closeModel()"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="customerForm">
+            <div class="mb-3">
+              <label for="customerName" class="form-label">Customer Name</label>
+              <input type="text" class="form-control" id="customerName" formControlName="customerName" required>
+              <div *ngIf="customerForm.get('customerName')?.invalid && customerForm.get('customerName')?.touched" class="text-danger">
+                Name is required.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="customerEmail" class="form-label">Email</label>
+              <input type="email" class="form-control" id="customerEmail" formControlName="customerEmail" required>
+              <div *ngIf="customerForm.get('customerEmail')?.invalid && customerForm.get('customerEmail')?.touched" class="text-danger">
+                Valid email is required.
+              </div>
+            </div>
+            <div class="block-content block-content-full text-end bg-body">
+              <button class="btn btn-danger mb-2 me-2" (click)="closeModel()" aria-label="Cancel">
+                <i class="fa-solid fa-xmark"></i> Cancel
+              </button>
+              <button class="btn btn-primary mb-2 me-2" type="button" [disabled]="customerForm.invalid" aria-label="Save" (click)="onSubmitCustomer()">
+                <i class="fa-solid fa-pen-to-square"></i> Save
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+ <!-- Edit Customer Offcanvas -->
+ <div class="offcanvas offcanvas-end" tabindex="-1" id="editCustomerOffcanvas" aria-labelledby="editCustomerOffcanvasLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="editCustomerOffcanvasLabel">Edit Customer</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <form>
+      <div class="mb-3">
+        <label for="editCustomerName" class="form-label">Customer Name</label>
+        <input type="text" class="form-control" id="editCustomerName" required>
+      </div>
+      <div class="mb-3">
+        <label for="editCustomerEmail" class="form-label">Email</label>
+        <input type="email" class="form-control" id="editCustomerEmail" required>
+      </div>
+      <div class="mb-3">
+        <label for="editCustomerPhone" class="form-label">Phone</label>
+        <input type="text" class="form-control" id="editCustomerPhone" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+  </div>
+</div>
+<div class="offcanvas offcanvas-end bg-body-extra-light w-25" tabindex="-1" id="offcanvasEdit"
+aria-labelledby="offcanvasEditLabel" aria-modal="true" role="dialog">
+<app-edit-customer *ngIf="customerAddOpen" [customer]="selectedCustomer" (refresh)="loadCustomers()"></app-edit-customer>
 </div>

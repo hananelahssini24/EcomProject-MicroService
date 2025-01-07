@@ -13,6 +13,10 @@ import { InventoryComponent } from './Components/bill/views/inventory/inventory/
 import { AddInventoryComponent } from './Components/bill/views/inventory/add-inventory/add-inventory.component';
 import { EditInventoryComponent } from './Components/bill/views/inventory/edit-inventory/edit-inventory.component';
 import { BillComponent } from './Components/bill/views/bill/bill/bill.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ProductItemComponent } from './Components/bill/views/productItem/product-item/product-item.component';
+import { AddProductItemComponent } from './Components/bill/views/productItem/add-product-item/add-product-item.component';
+import { EditProductItemComponent } from './Components/bill/views/productItem/edit-product-item/edit-product-item.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,12 +28,16 @@ import { BillComponent } from './Components/bill/views/bill/bill/bill.component'
     InventoryComponent,
     AddInventoryComponent,
     EditInventoryComponent,
-    BillComponent
+    BillComponent,
+    ProductItemComponent,
+    AddProductItemComponent,
+    EditProductItemComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

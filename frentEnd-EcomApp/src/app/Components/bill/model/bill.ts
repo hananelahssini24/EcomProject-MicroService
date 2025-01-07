@@ -1,32 +1,44 @@
-export interface Bill {
-    id: number;
-    billingDate: Date;
-    customerId: number;
-    productItems: ProductItem[];
+export class Bill {
+    id!: number;
+    billingDate!: Date;
+    customerId!: number;
+    productItems!: ProductItem[];
     customer?: Customer;
   }
   
-  export interface ProductItem {
-    id: number;
-    price: number;
-    quantity: number;
-    discount: number;
-    productId: Product;
+  export class ProductItem {
+    id!: number;
+    unitPrice!: number;
+    quantity!: number;
+    productId!: string;
+    bill!:Bill
+    product?: Product;
   }
   
-  export interface Customer {
-    id: number;
-    name: string;
-    email: string;
+  export class Customer {
+    id!: number;
+    name!: string;
+    email!: string;
   }
-  export interface Product{
-      id:number;
-      name:string;
-      price:number;
-      quantity:number;
+  export class Product{
+      id!: number;
+      name!: string;
+      price!: number;
+      quantity!: number;
 }
-export interface CustomerListResponse {
-  _embedded: {
+export class CustomerListResponse {
+  _embedded!: {
     customers: Customer[];
+  };
+}
+export class ProductListResponse {
+  _embedded!: {
+    products:  Product[];
+  };
+}
+
+export class BillListResponse {
+  _embedded!: {
+    bills:  Bill[];
   };
 }
